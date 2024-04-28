@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Delete blogs</title>
+    </head>
+    <body>
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% if user.is_authenticated %}
+        <form action="{% url "delete" blog_post.id %}" method="post">
+            {% csrf_token %}
+            <p>Are you sure you want to delete the blog?</a>
+            <button type="submit">Yes</button>
+            <a href="{% url "blogs" %}">Cancel</a>
+        </form>
+        {% else %}
+        <p>Sorry, wrong page</p>
+        {% endif %}
+    </body>
+</html>

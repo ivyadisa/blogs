@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Upload blogs</title>
+    </head>
+    <body>
+        <a href='{% url "login" %}'>Login</a>
+        <a href='{% url "register" %}'>Register</a>
+        {% for blog in blogs %}
+        <div>
+            <h1>{{ blog.title }}</h1>
+            <img src="{{blog.picture}}">
+            <p>{{blog.content}}</p>
+            <p>{{blog.uploaded_on}}</p>
+            <p>{{blog.author}}</p>
+            <a href="{% url "blog-detail" blog.id%}">Read more</a>
+        </div>
+        {% endfor %}
+    </body>
+</html>

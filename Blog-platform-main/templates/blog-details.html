@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>blogs-details</title>
+    </head>
+    <body>
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% if user.is_authenticated %}
+        <a href='{% url "delete" blog_post.id %}'>Delete</a>
+        <a href='{% url "edit" blog_post.id %}'>Edit</a>
+        {% endif %}
+        <div>
+            <h1>{{ blog_post.title }}</h1>
+            <img src="{{blog_post.picture}}">
+            <p>{{blog_post.content}}</p>
+            <p>{{blog_post.uploaded_on}}</p>
+            <p>{{blog_post.author}}</p>
+        </div>
+        <h1>Comment form</p>
+        <div>
+            <form action='{% url "blog-detail" blog_post.id %}' method='post'>
+                {% csrf_token %}
+                {{ comment_form.as_p }}
+                <button type='submit'>Post comment</button>
+            </form>
+        </div>
+        <h1>Comments</h1>
+        {% for comment in comment_list %}
+        <div>
+            <h1>{{ comment.name }}</h1>
+            <p>{{ comment.content}}</p>
+            <p>{{ comment.commented_on }}</p>
+        </div>
+        {%empty%}
+        <p>No comments yet<p>
+        {% endfor %}
+    </body>
+</html>
